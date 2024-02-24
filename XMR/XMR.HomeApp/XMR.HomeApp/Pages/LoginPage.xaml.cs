@@ -36,6 +36,7 @@ namespace XMR.HomeApp.Pages
                 // Показываем текстовое сообщение об ошибке
                 var infoMessage = (Label)stackLayout.Children.Last();
                 infoMessage.Text = "Слишком много попыток! Попробуйте позже.";
+                //infoMessage.TextColor= Color.FromRgb(255,0,0);
                 //stackLayout.Children.Add(new Label
                 //{
                 //    Text = "Слишком много попыток! Попробуйте позже.",
