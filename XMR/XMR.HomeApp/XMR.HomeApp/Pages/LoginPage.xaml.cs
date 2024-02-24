@@ -16,6 +16,10 @@ namespace XMR.HomeApp.Pages
         public LoginPage()
         {
             InitializeComponent();
+            if(Device.RuntimePlatform == Device.UWP)
+            {
+                loginButton.CornerRadius = 0;
+            }
         }
 
         private void login_Click(object sender, EventArgs e)
