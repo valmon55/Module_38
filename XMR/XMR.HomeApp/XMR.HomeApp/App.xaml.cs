@@ -11,7 +11,7 @@ namespace XMR.HomeApp
         {
             InitializeComponent();
 
-            MainPage = new MergeGridPage();
+            MainPage = new CsharpPaddingPage();
         }
 
         protected override void OnStart()
