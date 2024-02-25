@@ -21,7 +21,7 @@ namespace XMR.HomeApp.Pages
         /// </summary>
         void NavigateToPage(object sender, EventArgs e)
         {
-            // переход по ссылке с автодополнением при необходимости
+            // переход по ссылке с автодополнением при необходимости 
             webView.Source = new UrlWebViewSource { Url = urlEntry.Text.Contains("http") ? urlEntry.Text : $"https://{urlEntry.Text}" };
         }
     }
