@@ -35,6 +35,22 @@ namespace XMR.HomeApp.Pages
                 Placeholder = "Описание"
             };
 
+            // Создаем заголовок для переключателя
+            var switchHeader = new Label { Text = "Не использует газ", HorizontalOptions = LayoutOptions.Center, Margin = new Thickness(0, 5, 0, 0) };
+            stackLayout.Children.Add(switchHeader);
+
+            // Создаем переключатель
+            Switch switchControl = new Switch
+            {
+                IsToggled = false,
+                HorizontalOptions = LayoutOptions.Center,
+                ThumbColor = Color.DodgerBlue,
+                OnColor = Color.LightSteelBlue,
+            };
+
+            // Регистрируем обработчик события переключения
+            switchControl.Toggled += (sender, e) => SwitchHandler(sender, e, switchHeader);
+
             // Создание кнопки
             var addButton = new Button
             {
@@ -46,7 +62,21 @@ namespace XMR.HomeApp.Pages
             // Добавляем всё на страницу
             stackLayout.Children.Add(newDeviceName);
             stackLayout.Children.Add(newDeviceDescription);
+            stackLayout.Children.Add(switchControl);
             stackLayout.Children.Add(addButton);
+        }
+        /// <summary>
+        /// Обработка переключателя
+        /// </summary>
+        public void SwitchHandler(object sender, ToggledEventArgs e, Label header)
+        {
+            if (!e.Value)
+            {
+                header.Text = "Не использует газ";
+                return;
+            }
+
+            header.Text = "Использует газ";
         }
     }
 }
