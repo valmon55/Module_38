@@ -83,7 +83,18 @@ namespace XMR.HomeApp.Pages
             // Если изображение отсутствует - показываем информационное окно
             if (String.IsNullOrEmpty(imageName))
             {
-                await DisplayAlert("", "Изображение устройства отсутствует", "OK");
+                //await DisplayAlert("", "Изображение устройства отсутствует", "OK");
+
+                // Создаем новый объект изображения
+                Image img = new Image();
+                // Подключаем удаленный ресурс в качестве источника изображения
+                img.Source = new UriImageSource
+                {
+                    CachingEnabled = false,
+                    Uri = new Uri("https://i.stack.imgur.com/y9DpT.jpg")
+                };
+                // Инициализируем страницу
+                Content = img;
                 return;
             }
 
