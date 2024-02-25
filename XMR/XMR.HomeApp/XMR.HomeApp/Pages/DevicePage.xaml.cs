@@ -51,8 +51,18 @@ namespace XMR.HomeApp.Pages
             foreach (string deviceName in homeDevices)
             {
                 var deviceLabel = new Label() { Text = $"   {deviceName}", FontSize = 17 };
-                innerStack.Children.Add(new Label());
-                innerStack.Children.Add(deviceLabel);
+
+                var frame = new Frame()
+                {
+                    BorderColor = Color.Gray,
+                    BackgroundColor = Color.FromHex("#e1e1e1"),
+                    CornerRadius = 4,
+                    Margin = new Thickness(10, 1)
+                };
+
+                frame.Content = deviceLabel;
+                
+                innerStack.Children.Add(frame);
             }
 
             // Сохраним стек внутрь уже имеющегося в xaml-файле блока прокручиваемой разметки
