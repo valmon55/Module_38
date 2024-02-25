@@ -11,7 +11,7 @@ namespace XMR.HomeApp
         {
             InitializeComponent();
 
-            MainPage = new ProfilePage();
+            MainPage = new WebPage();
         }
 
         protected override void OnStart()
