@@ -89,7 +89,7 @@ namespace XMR.HomeApp.Pages
 
             // При наличии изображения - загружаем его по заданному пути
             Image image = new Image();
-            image.Source = ImageSource.FromResource($"HomeApp.Images.{imageName}");
+            image.Source = ImageSource.FromResource($"XMR.HomeApp.Images.{imageName}");
             Content = image;
         }
     }
