@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -10,7 +11,8 @@ namespace WeatherApp
 {
     public partial class MainPage : ContentPage
     {
-        public const string BUTTON_TEXT = "Get weather";
+        public const string BUTTON_TEXT = "Узнать погоду";
+        public const string BUTTON_ALARM = "Установить будильник";
         public MainPage()
         {
             InitializeComponent();
@@ -96,6 +98,85 @@ namespace WeatherApp
 
             // Инициализация свойства Content созданным табличным лейаутом идентична тому,
             // как если бы мы создавали его в XAML и разместили внутри ContentPage.
+            this.Content = layout;
+        }
+        /// <summary>
+        /// Отображение настроек будильника
+        /// </summary>
+        private void AlarmSetup(object sender, EventArgs e)
+        {
+            var layout = new StackLayout();
+            var tableView = new TableView();
+            var date = new DatePicker()
+            {
+                Format = "D",
+                Date = DateTime.Now.Date
+            };
+            layout.Children.Add(date);
+
+            var time = new TimePicker()
+            {
+                Format = "T",
+                Time = DateTime.Now.TimeOfDay
+            };
+            layout.Children.Add(time);
+
+            var soundLevelText = new Label()
+            {
+                Text = "Уровень звука ", HorizontalOptions =  LayoutOptions.Center, Margin = new Thickness(30,10)
+            };
+            var soundLevel = new Stepper()
+            {
+                Minimum = 0,
+                Maximum = 10,
+                Increment = 1,
+                Value = 2
+            };
+            layout.Children.Add(soundLevelText);
+            layout.Children.Add(soundLevel);
+            //soundLevel.ValueChanged += (sender, e) => SoundLevelHandler(sender, e, soundLevelText);
+
+            var daily = new Switch()
+            {
+                IsToggled = false,
+                HorizontalOptions = LayoutOptions.Center,
+                ThumbColor = Color.LightGray,
+                OnColor = Color.LightBlue
+            };
+            layout.Children.Add(daily);
+
+            var save = new Button()
+            {
+                Text = "Сохранить",                
+            };
+            //save.Clicked += (sender, e) => ShowAlarmType(sender, e, date, time, daily);
+            layout.Children.Add(save);
+
+            this.Content = layout;
+        }
+
+        private void SoundLevelHandler(object sender, ValueChangedEventArgs e, Label label)
+        {
+
+        }
+        private void SwitchHandler(object sender, ToggledEventArgs e, Label label)
+        {
+            if(e.Value)
+            {
+                label.Text = "Ежедневно";
+                return;
+            }
+            label.Text = string.Empty;
+        }
+        private void ShowAlarmType(object sender, EventArgs e, DatePicker date, TimePicker time, Switch daily)
+        {
+            var layout = new StackLayout();
+            var alarmText = new Label()
+            {
+                Text = "Будильник сработает" + Environment.NewLine +
+                        (daily.IsToggled ? "" : date.Date.ToString()) + " в " + time.Time.ToString()
+            };
+            layout.Children.Add(alarmText);
             this.Content = layout;
         }
     }
