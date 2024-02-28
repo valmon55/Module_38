@@ -109,37 +109,46 @@ namespace WeatherApp
             var tableView = new TableView();
             var date = new DatePicker()
             {
-                Format = "D",
+                HorizontalOptions = LayoutOptions.Center,
+                Format = "d.MM.yyyy",
                 Date = DateTime.Now.Date
             };
             layout.Children.Add(date);
 
             var time = new TimePicker()
             {
-                Format = "T",
+                HorizontalOptions = LayoutOptions.Center,
+                Format = "H:mm",
                 Time = DateTime.Now.TimeOfDay
             };
             layout.Children.Add(time);
 
             var soundLevelText = new Label()
             {
-                Text = "Уровень звука ", HorizontalOptions =  LayoutOptions.Center, Margin = new Thickness(30,10)
+                Text = "Громкость ", 
+                HorizontalOptions =  LayoutOptions.Center, 
+                Margin = new Thickness(30,10)
             };
             var soundLevel = new Stepper()
             {
+                HorizontalOptions = LayoutOptions.Center,
+                Margin = new Thickness(30, 10),
                 Minimum = 0,
                 Maximum = 10,
                 Increment = 1,
                 Value = 2
             };
+            soundLevelText.Text = $"Громкость {soundLevel.Value}";
+
             layout.Children.Add(soundLevelText);
             layout.Children.Add(soundLevel);
-            soundLevel.ValueChanged += (sender, e) => SoundLevelHandler(sender, e, soundLevelText);
+            soundLevel.ValueChanged += (send, t) => SoundLevelHandler(send, t, soundLevelText);
 
             var daily = new Switch()
             {
-                IsToggled = false,
                 HorizontalOptions = LayoutOptions.Center,
+                Margin = new Thickness(30, 10),
+                IsToggled = false,
                 ThumbColor = Color.LightGray,
                 OnColor = Color.LightBlue
             };
@@ -147,9 +156,11 @@ namespace WeatherApp
 
             var save = new Button()
             {
+                HorizontalOptions = LayoutOptions.Center,
+                Margin = new Thickness(30, 10),
                 Text = "Сохранить",                
             };
-            //save.Clicked += (sender, e) => ShowAlarmType(sender, e, date, time, daily);
+            save.Clicked += (send, t) => ShowAlarmType(send, t, date, time, daily);
             layout.Children.Add(save);
 
             this.Content = layout;
@@ -157,7 +168,12 @@ namespace WeatherApp
 
         private void SoundLevelHandler(object sender, ValueChangedEventArgs e, Label label)
         {
-
+            if (e.NewValue == 0)
+            {
+                label.Text = "Без звука";
+                return;
+            }
+            label.Text = $"Громкость {e.NewValue}";
         }
         private void SwitchHandler(object sender, ToggledEventArgs e, Label label)
         {
@@ -173,8 +189,13 @@ namespace WeatherApp
             var layout = new StackLayout();
             var alarmText = new Label()
             {
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Center,
+                HorizontalTextAlignment = TextAlignment.Center,
+                FontSize = 48,
                 Text = "Будильник сработает" + Environment.NewLine +
-                        (daily.IsToggled ? "" : date.Date.ToString()) + " в " + time.Time.ToString()
+                        (daily.IsToggled ? "" : $"{date.Date.Day}.{date.Date.Month}.{date.Date.Year}") + 
+                        $" в {time.Time.Hours}:{time.Time.Minutes}"
             };
             layout.Children.Add(alarmText);
             this.Content = layout;
