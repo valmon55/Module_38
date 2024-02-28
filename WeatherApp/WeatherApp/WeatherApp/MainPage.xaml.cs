@@ -134,7 +134,7 @@ namespace WeatherApp
             };
             layout.Children.Add(soundLevelText);
             layout.Children.Add(soundLevel);
-            //soundLevel.ValueChanged += (sender, e) => SoundLevelHandler(sender, e, soundLevelText);
+            soundLevel.ValueChanged += (sender, e) => SoundLevelHandler(sender, e, soundLevelText);
 
             var daily = new Switch()
             {
